@@ -336,6 +336,11 @@ window.addEventListener("scroll", showHeaderWhileScrolling, { passive: true });
 
 const scrollToCurrentHash = () => {
   if (!window.location.hash) return;
+  if (window.location.hash === "#inicio") {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.setTimeout(updateHeaderSoftness, 260);
+    return;
+  }
   const target = document.querySelector(window.location.hash);
   if (target) {
     const header = document.querySelector(".site-header");
@@ -349,6 +354,19 @@ const scrollToCurrentHash = () => {
 
 window.addEventListener("load", scrollToCurrentHash);
 window.addEventListener("hashchange", scrollToCurrentHash);
+
+document.querySelectorAll(".brand, .nav a[href='#inicio']").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    body.classList.remove("nav-open");
+    navToggle?.setAttribute("aria-expanded", "false");
+    if (window.location.hash !== "#inicio") {
+      history.pushState(null, "", "#inicio");
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.setTimeout(updateHeaderSoftness, 260);
+  });
+});
 
 document.querySelectorAll("[data-contact-form]").forEach((form) => {
   form.addEventListener("submit", (event) => {
