@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Página de e-book de Lucía Diez. Producto digital pendiente de carga final." />
+    <meta name="theme-color" content="#F7F2ED" />
+    <title>E-book · Lucía Diez</title>
+    <link rel="icon" href="../assets/logo-lucia-diez-raiz-rosa-editorial.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Playfair+Display:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css?v=design128" />
+  </head>
+  <body class="inner-page">
+    <header class="site-header">
+      <a class="brand" href="../index.html#inicio" aria-label="Inicio Lucía Diez">
+        <img class="brand-logo" src="../assets/logo-lucia-diez-raiz-rosa-editorial.png" alt="Lic. Lucía Diez Psicóloga" />
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Navegación principal">
+        <a href="../index.html#inicio">Inicio</a>
+        <a href="../index.html#sobre-lucia">Sobre mí</a>
+        <a href="../index.html#acompanamientos">Cómo puedo acompañarte</a>
+        <a class="nav-reserve" href="../index.html#contacto">Reserva tu sesión</a>
+        <a href="../index.html#ebooks">E-books</a>
+        <a href="../index.html#faq">Preguntas</a>
+        <a class="nav-contact" href="../index.html#contacto">Contacto</a>
+      </nav>
+    </header>
+
+    <a class="floating-whatsapp" href="https://wa.me/5491167015721" rel="noreferrer" aria-label="Escribir por WhatsApp">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12.04 3.2a8.76 8.76 0 0 0-7.5 13.27L3.7 20.8l4.43-1.03a8.74 8.74 0 1 0 3.91-16.57Zm0 1.75a7 7 0 1 1-3.44 13.08l-.32-.18-2.22.52.45-2.19-.2-.33a7 7 0 0 1 5.73-10.9Zm-2.34 3.42c-.16 0-.42.06-.65.32-.22.25-.85.83-.85 2.02 0 1.18.87 2.33.99 2.49.12.16 1.7 2.6 4.12 3.65 2.04.88 2.45.7 2.9.65.44-.07 1.43-.59 1.63-1.15.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28l-1.66-.8c-.24-.1-.4-.16-.57.08-.16.25-.65.8-.8.97-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.97-1.21-.73-.65-1.22-1.45-1.36-1.7-.14-.24-.02-.37.1-.5.11-.1.25-.28.37-.42.12-.15.16-.25.24-.41.08-.16.04-.3-.02-.42l-.75-1.8c-.2-.48-.4-.4-.57-.4h-.46Z" />
+      </svg>
+    </a>
+
+    <main>
+      <section class="ebook-product">
+        <div class="ebook-product-copy">
+          <p class="eyebrow">E-book R.A.Í.Z.</p>
+          <h1>Psicoeducación y actividades para desarrollar recursos.</h1>
+          <p>
+            Un recurso de psicoeducación y actividades para comprender el trauma, la regulación emocional y los
+            vínculos, y comenzar a desarrollar herramientas prácticas de cuidado y recuperación.
+          </p>
+          <ul class="ebook-includes" aria-label="Contenido del e-book">
+            <li>Psicoeducación clara y cuidada</li>
+            <li>Actividades prácticas para el día a día</li>
+            <li>Ejercicios guiados de regulación emocional</li>
+          </ul>
+          <p class="ebook-product-note">
+            Preguntar a Lu: confirmar título final, tapa definitiva, archivo de descarga y descripción aprobada antes
+            de activar pagos reales.
+          </p>
+        </div>
+
+        <div class="ebook-visual" aria-label="Tapa y contratapa del e-book">
+          <button class="ebook-flip-card ebook-product-flip" type="button" data-ebook-flip aria-pressed="false">
+            <span class="ebook-flip-inner">
+              <img class="ebook-face ebook-face-front" src="../assets/tapa-ebook-raiz-lucia-diez.png" alt="Tapa del e-book R.A.Í.Z. de Lucía Diez" />
+              <img class="ebook-face ebook-face-back" src="../assets/contratapa-ebook-raiz-lucia-diez-ajustada.png" alt="Contratapa del e-book R.A.Í.Z. de Lucía Diez" />
+            </span>
+          </button>
+          <span class="ebook-ribbon ebook-flip-hint" data-flip-hint>Tocá para ver la contratapa</span>
+        </div>
+
+        <aside class="ebook-buy-panel">
+          <div class="price-box">
+            <span>Acceso digital</span>
+            <strong>$20.000 ARS</strong>
+            <small>Exterior USD 25 · entrega por email al aprobarse el pago.</small>
+          </div>
+          <form class="checkout-form" data-checkout-form>
+            <label>
+              Nombre
+              <input type="text" name="name" autocomplete="name" required />
+            </label>
+            <label>
+              Email para recibir la descarga
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label>
+              Medio de pago
+              <select name="gateway" required>
+                <option value="mercadopago">Comprar desde Argentina - Mercado Pago</option>
+                <option value="paypal">Comprar desde el exterior - PayPal</option>
+              </select>
+            </label>
+            <button class="button primary" type="submit">Comprar desde Argentina</button>
+            <a
+              class="button secondary"
+              href="https://wa.me/5491167015721?text=Hola%20Luc%C3%ADa%2C%20quiero%20comprar%20el%20E-book%20R.A.%C3%8D.Z.%20desde%20el%20exterior."
+              rel="noreferrer"
+            >Comprar desde el exterior</a>
+            <p class="form-note">Modo maqueta: falta conectar Mercado Pago, PayPal y archivo final.</p>
+          </form>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© 2026 · Psicología integrativa</p>
+      <nav aria-label="Enlaces de pie de página">
+        <a href="../index.html#inicio">Inicio</a>
+        <a href="https://www.instagram.com/luciadiez.psicologa/" rel="noreferrer">Instagram</a>
+        <a href="https://wa.me/5491167015721" rel="noreferrer">WhatsApp</a>
+        <a href="../legal/privacidad.html">Privacidad</a>
+        <a href="../legal/terminos.html">Términos</a>
+        <a href="../legal/compra-descarga.html">Compra y descarga</a>
+      </nav>
+    </footer>
+    <script src="../scripts.js?v=design120"></script>
+  </body>
+</html>

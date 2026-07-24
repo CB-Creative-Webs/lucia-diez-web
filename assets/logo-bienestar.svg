@@ -1,0 +1,10 @@
+<svg width="220" height="64" viewBox="0 0 220 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Bienestar</title>
+  <desc id="desc">Logo de Bienestar con un monograma orgánico y hojas suaves.</desc>
+  <rect x="2" y="2" width="60" height="60" rx="20" fill="#F4E8D8" stroke="#C8896B" stroke-width="4"/>
+  <path d="M22.3 39.9C18.6 34.7 19.5 27.7 24.6 23.9C29.6 20.1 37 21 40.7 26.1C44.5 31.2 43.4 38.3 38.4 42C33.3 45.8 26 44.9 22.3 39.9Z" fill="#84956E"/>
+  <path d="M32.2 42.6C33.1 34.3 38.2 27.3 46.1 23.5C46.6 31.9 42.4 39.7 34.7 44.2" stroke="#34524A" stroke-width="3.4" stroke-linecap="round"/>
+  <path d="M23.5 25.8C31.3 28.4 37 34.9 38.4 43.3" stroke="#FDF8EF" stroke-width="2.8" stroke-linecap="round"/>
+  <text x="78" y="35" fill="#2E3834" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="700" letter-spacing="0">Bienestar</text>
+  <text x="80" y="51" fill="#7C6B5E" font-family="Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="2.8">TERAPIA INTEGRAL</text>
+</svg>
