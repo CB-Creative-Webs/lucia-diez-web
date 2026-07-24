@@ -471,6 +471,34 @@ body.header-idle:not(.nav-open) .site-header:not(:hover):not(:focus-within) {
   }
 }
 
+@keyframes heroAuraFloat {
+  0%,
+  100% {
+    border-radius: 52% 48% 58% 42%;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  33% {
+    border-radius: 46% 54% 49% 51%;
+    transform: translate3d(10px, -8px, 0) rotate(3deg) scale(1.025);
+  }
+  66% {
+    border-radius: 58% 42% 52% 48%;
+    transform: translate3d(-8px, 6px, 0) rotate(-2deg) scale(0.985);
+  }
+}
+
+@keyframes portraitAccentPulse {
+  0%,
+  100% {
+    transform: translateY(0) scaleY(1);
+    opacity: 0.82;
+  }
+  50% {
+    transform: translateY(-8px) scaleY(1.04);
+    opacity: 0.7;
+  }
+}
+
 .nav-toggle span:not(.sr-only) {
   display: block;
   width: 20px;
@@ -509,6 +537,8 @@ body.header-idle:not(.nav-open) .site-header:not(:hover):not(:focus-within) {
     linear-gradient(135deg, rgba(215, 166, 180, 0.36), rgba(167, 180, 160, 0.28), rgba(120, 147, 170, 0.16)),
     var(--marfil);
   filter: blur(0.2px);
+  transform-origin: 48% 52%;
+  animation: heroAuraFloat 16s ease-in-out infinite;
 }
 
 .hero-copy {
@@ -760,6 +790,8 @@ h3 {
   border-radius: 999px 999px 8px 8px;
   background: linear-gradient(180deg, var(--rose), rgba(215, 166, 180, 0.62));
   pointer-events: none;
+  transform-origin: center bottom;
+  animation: portraitAccentPulse 8.5s ease-in-out infinite;
 }
 
 .hero-portrait::before {
