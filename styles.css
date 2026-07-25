@@ -3270,6 +3270,87 @@ summary:focus-visible {
   transform: translateY(-1px);
 }
 
+.site-credit {
+  display: flex;
+  justify-content: center;
+  padding: 12px 18px 20px;
+  text-align: center;
+}
+
+.designer-credit {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 8px 4px 9px;
+  border: 1px solid rgba(49, 73, 93, 0.1);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 249, 0.68), rgba(247, 242, 237, 0.54)),
+    var(--warm-white);
+  box-shadow: 0 8px 22px rgba(49, 73, 93, 0.06);
+  color: rgba(49, 73, 93, 0.68);
+  cursor: pointer;
+  overflow: hidden;
+  text-decoration: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.designer-credit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 22%, rgba(255, 255, 255, 0.74) 48%, transparent 72%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-120%);
+  transition: opacity 180ms ease, transform 420ms ease;
+}
+
+.designer-credit-text {
+  color: currentColor;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.designer-credit img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  opacity: 0.78;
+  mix-blend-mode: multiply;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.designer-credit:hover {
+  border-color: rgba(49, 73, 93, 0.18);
+  box-shadow: 0 10px 26px rgba(49, 73, 93, 0.08);
+  color: var(--ink);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.designer-credit:hover::after {
+  opacity: 1;
+  transform: translateX(120%);
+}
+
+.designer-credit:hover img {
+  opacity: 0.92;
+  transform: translateX(1px) scale(1.04);
+}
+
+.designer-credit:focus-visible {
+  outline: 3px solid rgba(215, 166, 180, 0.45);
+  outline-offset: 3px;
+}
+
 .inner-page {
   min-height: 100svh;
 }
@@ -4024,6 +4105,10 @@ summary:focus-visible {
 
   .footer nav a:last-child {
     grid-column: 1 / -1;
+  }
+
+  .site-credit {
+    padding-bottom: 82px;
   }
 }
 
