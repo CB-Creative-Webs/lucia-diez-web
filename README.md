@@ -9,6 +9,8 @@ Sitio profesional para Lucia Diez, psicologa, con identidad visual editorial, pa
 - Repositorio remoto configurado: `https://github.com/CB-Creative-Webs/lucia-diez-web.git`.
 - Rama objetivo: `main`.
 - Version de cache actual en HTML: `design135`.
+- SEO tecnico: canonicales, metadatos sociales, `robots.txt`, `sitemap.xml` y datos estructurados JSON-LD para la profesional, el programa y el e-book.
+- AEO/GEO: respuestas frecuentes explicitas, entidades consistentes y `llms.txt` con las paginas y afirmaciones verificables principales.
 - Idiomas: Espanol e ingles mediante `scripts.js`.
 - La navegacion principal incluye: Inicio, Sobre mi, Como puedo acompanarte, Reserva tu sesion, E-books, Preguntas y Contacto.
 - La firma de autoria al pie es minimal: `Design by CB` con logo y link externo.
@@ -90,6 +92,7 @@ Sitio profesional para Lucia Diez, psicologa, con identidad visual editorial, pa
 10. Se agrego credito minimal de autoria: `Design by CB`.
 11. Se cambio el precio de sesion individual de `$70.000 ARS` a `$60.000 ARS`.
 12. Se actualizaron los valores vigentes: sesion individual exterior a `USD 65` y Programa R.A.I.Z. a `$240.000 ARS` / `USD 260`.
+13. Se completo una optimizacion SEO, AEO y GEO integral: metadata por URL, datos estructurados, sitemap, robots, contenido citable y limpieza de textos de maqueta.
 
 ## Pendientes Antes de Produccion Final
 
@@ -101,6 +104,7 @@ Sitio profesional para Lucia Diez, psicologa, con identidad visual editorial, pa
 - Validar que `og-lucia-diez.jpg` sea la imagen final deseada para WhatsApp.
 - Revisar mobile real en 360, 375, 390 y 430 px.
 - Revisar accesibilidad basica: foco, contraste, labels y navegacion por teclado.
+- Verificar el dominio en Google Search Console y Bing Webmaster Tools, y enviar `https://www.luciadiez.com/sitemap.xml` luego de publicar estos cambios.
 
 ## Como Levantar Localmente
 

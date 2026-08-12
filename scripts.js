@@ -6,7 +6,7 @@ const langButtons = document.querySelectorAll("[data-lang-switch]");
 const homeTranslations = {
   es: {
     lang: "es-AR",
-    title: "Lucía Diez · Psicóloga",
+    title: "Lucía Diez | Psicóloga, psicotrauma y terapia EMDR",
     selectorText: {
       ".skip-link": "Saltar al contenido",
       ".brand": "Inicio Lucía Diez",
@@ -117,14 +117,14 @@ const homeTranslations = {
     faq: [
       ["¿Cuánto dura cada sesión?", "Las sesiones individuales duran 50 minutos."],
       ["¿Hay tolerancia de llegada?", "La tolerancia es de 15 minutos. Pasado ese tiempo, la sesión puede considerarse ausente."],
-      ["¿Cómo se abonan las sesiones?", "El pago es anticipado para reservar el espacio. Preguntar a Lu: medios de pago disponibles."],
+      ["¿Cómo se abonan las sesiones?", "El pago es anticipado para reservar el espacio. Los medios disponibles se informan al coordinar la sesión."],
       ["¿Qué pasa si cancelo con menos de 48 horas?", "Las cancelaciones con menos de 48 horas de anticipación se cobran igualmente."],
       ["¿Qué necesito para una sesión online?", "Un espacio privado y cuidado, buena conexión, y auriculares en lo posible para preservar la confidencialidad."],
-      ["¿La atención es presencial u online?", "Preguntar a Lu: modalidad actual, zona de atención presencial y disponibilidad horaria."],
-      ["¿El Método R.A.Í.Z. reemplaza una terapia individual?", "Preguntar a Lu: cómo desea explicar el alcance clínico del programa, criterios de admisión y evaluación inicial."],
+      ["¿La atención es presencial u online?", "La atención se ofrece online. La disponibilidad se confirma durante el primer contacto."],
+      ["¿El Método R.A.Í.Z. reemplaza una terapia individual?", "No. Es un recorrido clínico estructurado de 12 semanas. En el primer contacto se evalúa si es adecuado para cada persona y qué continuidad puede necesitar."],
       ["¿Qué incluye el programa R.A.Í.Z.?", "Según la información disponible: 12 semanas, 6 sesiones individuales, materiales, recursos, tareas, ejercicios y seguimiento profesional."],
       ["¿Cuándo se ven cambios?", "Cada proceso es único. La recuperación del trauma es gradual, respetuosa y posible; no se prometen cambios rápidos ni soluciones instantáneas."],
-      ["¿Es un espacio para urgencias?", "Preguntar a Lu: cómo quiere comunicar el protocolo ante crisis o urgencias, y qué canales indicar fuera del horario de atención."],
+      ["¿Es un espacio para urgencias?", "No. Este espacio no brinda atención de urgencias. Ante una crisis o riesgo inmediato, contactá al servicio de emergencias de tu localidad."],
       ["¿Cómo se entregarían los recursos digitales?", "Cuando la compra esté aprobada, el sistema enviará un enlace privado y temporal al email informado."]
     ]
   },
@@ -241,14 +241,14 @@ const homeTranslations = {
     faq: [
       ["How long does each session last?", "Individual sessions last 50 minutes."],
       ["Is there an arrival tolerance?", "There is a 15-minute tolerance. After that, the session may be considered missed."],
-      ["How are sessions paid?", "Payment is made in advance to reserve the space. Ask Lucía: available payment methods."],
+      ["How are sessions paid?", "Payment is made in advance to reserve the space. Available payment methods are shared when coordinating the session."],
       ["What happens if I cancel with less than 48 hours notice?", "Cancellations made with less than 48 hours notice are charged anyway."],
       ["What do I need for an online session?", "A private and calm space, a stable connection, and headphones if possible to preserve confidentiality."],
-      ["Is care available online or in person?", "Ask Lucía: current modality, in-person location and schedule availability."],
-      ["Does the R.A.Í.Z. Method replace individual therapy?", "Ask Lucía: how she wants to explain the clinical scope of the program, admission criteria and initial evaluation."],
+      ["Is care available online or in person?", "Care is available online. Current availability is confirmed during the first contact."],
+      ["Does the R.A.Í.Z. Method replace individual therapy?", "No. It is a structured 12-week clinical path. The first contact helps assess whether it is appropriate and what further care may be needed."],
       ["What does the R.A.Í.Z. program include?", "According to the available information: 12 weeks, 6 individual sessions, materials, resources, tasks, exercises and professional follow-up."],
       ["When can changes be noticed?", "Each process is unique. Trauma recovery is gradual, respectful and possible; quick changes or instant solutions are not promised."],
-      ["Is this a space for emergencies?", "Ask Lucía: how she wants to communicate the protocol for crises or emergencies, and which channels to indicate outside working hours."],
+      ["Is this a space for emergencies?", "No. This service does not provide emergency care. If there is an immediate crisis or risk, contact your local emergency service."],
       ["How would digital resources be delivered?", "Once the purchase is approved, the system will send a private temporary link to the email provided."]
     ]
   }

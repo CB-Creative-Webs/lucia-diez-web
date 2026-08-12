@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /config/
+Disallow: /supabase/
+Disallow: /tmp/
+Disallow: /output/
+
+Sitemap: https://www.luciadiez.com/sitemap.xml
