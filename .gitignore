@@ -1,0 +1,7 @@
+.DS_Store
+.private/
+tmp/
+output/
+.env
+.env.*
+!.env.example
