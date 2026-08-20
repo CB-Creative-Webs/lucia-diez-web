@@ -396,14 +396,37 @@ document.querySelectorAll("[data-contact-form]").forEach((form) => {
 });
 
 document.querySelectorAll("[data-checkout-form]").forEach((form) => {
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const data = new FormData(form);
-    const gateway = data.get("gateway");
-    const name = encodeURIComponent(String(data.get("name") || ""));
-    const email = encodeURIComponent(String(data.get("email") || ""));
-    const target = gateway === "paypal" ? "../pages/pago-pendiente.html" : "../pages/pago-aprobado.html";
-    window.location.href = `${target}?test=1&name=${name}&email=${email}`;
+    const gateway = data.get("gateway") === "paypal" ? "paypal" : "mercadopago";
+    const submit = form.querySelector("button[type='submit']");
+    const status = form.querySelector("[data-checkout-status]");
+    if (submit instanceof HTMLButtonElement) submit.disabled = true;
+    if (status) status.textContent = "Preparando el pago seguro…";
+    try {
+      const response = await fetch(
+        `https://lucia-diez-ebook-api.cbcreative10.workers.dev/api/checkout/${gateway}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: String(data.get("name") || ""),
+            email: String(data.get("email") || ""),
+          }),
+        },
+      );
+      const payload = await response.json();
+      if (!response.ok || !payload.redirectUrl) {
+        throw new Error(payload.error || "No pudimos iniciar el pago.");
+      }
+      window.location.href = payload.redirectUrl;
+    } catch (error) {
+      if (status) {
+        status.textContent = error instanceof Error ? error.message : "No pudimos iniciar el pago. Intentá nuevamente.";
+      }
+      if (submit instanceof HTMLButtonElement) submit.disabled = false;
+    }
   });
 });
 

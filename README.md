@@ -11,6 +11,7 @@ Sitio profesional para Lucia Diez, psicologa, con identidad visual editorial, pa
 - Version de cache actual en HTML: `design135`.
 - SEO tecnico: canonicales, metadatos sociales, `robots.txt`, `sitemap.xml` y datos estructurados JSON-LD para la profesional, el programa y el e-book.
 - AEO/GEO: respuestas frecuentes explicitas, entidades consistentes y `llms.txt` con las paginas y afirmaciones verificables principales.
+- Venta del e-book: backend de staging en Cloudflare Worker, base D1 y PDF en R2 privado; producción bloqueada hasta cargar secretos y completar pruebas.
 - Idiomas: Espanol e ingles mediante `scripts.js`.
 - La navegacion principal incluye: Inicio, Sobre mi, Como puedo acompanarte, Reserva tu sesion, E-books, Preguntas y Contacto.
 - La firma de autoria al pie es minimal: `Design by CB` con logo y link externo.
@@ -39,6 +40,7 @@ Sitio profesional para Lucia Diez, psicologa, con identidad visual editorial, pa
 - `legal/privacidad.html`, `legal/terminos.html`, `legal/compra-descarga.html`: paginas legales en borrador.
 - `api/ARCHITECTURE.md`: arquitectura propuesta para pagos y entrega automatica.
 - `supabase/schema.sql`: esquema inicial para compras digitales.
+- `worker/`: backend de pagos, webhooks, Brevo y descargas privadas sobre Cloudflare Workers, D1 y R2.
 
 ## Assets Importantes
 

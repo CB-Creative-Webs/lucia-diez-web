@@ -1,0 +1,40 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "lucia-diez-ebook-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-20",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "ENVIRONMENT": "staging",
+    "SALE_ENABLED": "false",
+    "SITE_URL": "https://www.luciadiez.com",
+    "API_PUBLIC_URL": "https://lucia-diez-ebook-api.cbcreative10.workers.dev",
+    "ALLOWED_ORIGIN": "https://www.luciadiez.com",
+    "PRODUCT_ID": "ebook-raiz",
+    "PRODUCT_TITLE": "E-book R.A.Í.Z.",
+    "PRODUCT_ARS": "20000",
+    "PRODUCT_USD": "25",
+    "EBOOK_OBJECT_KEY": "ebooks/Ebook_RAIZ_FINAL.pdf",
+    "DOWNLOAD_TTL_HOURS": "168",
+    "MAX_DOWNLOADS": "3",
+    "BREVO_SENDER_EMAIL": "luciaadiez@gmail.com",
+    "BREVO_SENDER_NAME": "Lucía Diez",
+    "PAYPAL_API_BASE": "https://api-m.sandbox.paypal.com"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lucia-diez-ebook-sales"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "EBOOKS",
+      "bucket_name": "lucia-diez-ebooks-private"
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

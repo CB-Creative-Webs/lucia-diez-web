@@ -1,0 +1,30 @@
+{
+  "product": {
+    "id": "ebook-raiz",
+    "title": "E-book R.A.I.Z.",
+    "sourceFile": ".private/ebooks/Ebook_RAIZ_FINAL.pdf",
+    "prices": {
+      "ARS": 20000,
+      "USD": 25
+    }
+  },
+  "sale": {
+    "enabled": false,
+    "downloadEnabled": false
+  },
+  "delivery": {
+    "provider": "brevo",
+    "senderEmail": "luciaadiez@gmail.com",
+    "replyTo": "luciaadiez@gmail.com",
+    "linkTtlHours": 168,
+    "maxDownloads": 3
+  },
+  "payments": {
+    "mercadoPago": {
+      "enabled": false
+    },
+    "paypal": {
+      "enabled": false
+    }
+  }
+}
