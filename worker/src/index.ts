@@ -5,6 +5,7 @@ type Gateway = "mercadopago" | "paypal";
 interface CheckoutBody {
   name?: unknown;
   email?: unknown;
+  promoCode?: unknown;
 }
 
 interface Purchase {
@@ -39,6 +40,14 @@ const normalizeEmail = (value: unknown) =>
 const normalizeName = (value: unknown) =>
   typeof value === "string" ? value.trim().replace(/\s+/g, " ") : "";
 
+const normalizePromoCode = (value: unknown) =>
+  typeof value === "string" ? value.trim().toUpperCase() : "";
+
+const promoDiscounts: Record<string, number> = {
+  RAIZ30: 30,
+  RAIZ50: 50,
+};
+
 const validEmail = (email: string) =>
   email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -71,9 +80,11 @@ const parseCheckout = async (request: Request) => {
   const body = (await request.json()) as CheckoutBody;
   const name = normalizeName(body.name);
   const email = normalizeEmail(body.email);
+  const promoCode = normalizePromoCode(body.promoCode);
   if (name.length < 2 || name.length > 100) throw new Error("Ingresá un nombre válido.");
   if (!validEmail(email)) throw new Error("Ingresá un email válido.");
-  return { name, email };
+  if (promoCode && !promoDiscounts[promoCode]) throw new Error("El código promocional no es válido.");
+  return { name, email, discountPercent: promoDiscounts[promoCode] || 0 };
 };
 
 const saleEnabled = (env: Env) => String(env.SALE_ENABLED) === "true";
@@ -88,11 +99,15 @@ const createPurchase = async (
   gateway: Gateway,
   name: string,
   email: string,
+  discountPercent: number,
 ) => {
   const id = crypto.randomUUID();
   const currency = gateway === "mercadopago" ? "ARS" : "USD";
-  const amount = gateway === "mercadopago" ? Number(env.PRODUCT_ARS) : Number(env.PRODUCT_USD);
-  if (!Number.isFinite(amount) || amount <= 0) throw new Error("Precio inválido en el servidor.");
+  const baseAmount = gateway === "mercadopago" ? Number(env.PRODUCT_ARS) : Number(env.PRODUCT_USD);
+  const amount = Math.round(baseAmount * (1 - discountPercent / 100) * 100) / 100;
+  if (!Number.isFinite(baseAmount) || baseAmount <= 0 || !Number.isFinite(amount) || amount <= 0) {
+    throw new Error("Precio inválido en el servidor.");
+  }
   await env.DB.prepare(
     `INSERT INTO purchases
       (id, product_id, customer_name, customer_email, gateway, currency, amount_cents)
@@ -106,8 +121,8 @@ const createPurchase = async (
 const mercadoPagoCheckout = async (request: Request, env: Env) => {
   if (!saleEnabled(env)) return errorResponse(env, "La venta todavía está en preparación.", 503);
   ensureAllowedOrigin(request, env);
-  const { name, email } = await parseCheckout(request);
-  const purchase = await createPurchase(env, "mercadopago", name, email);
+  const { name, email, discountPercent } = await parseCheckout(request);
+  const purchase = await createPurchase(env, "mercadopago", name, email, discountPercent);
   const apiUrl = new URL(request.url).origin;
   const response = await fetch("https://api.mercadopago.com/checkout/preferences", {
     method: "POST",
@@ -169,8 +184,8 @@ const paypalAccessToken = async (env: Env) => {
 const paypalCheckout = async (request: Request, env: Env) => {
   if (!saleEnabled(env)) return errorResponse(env, "La venta todavía está en preparación.", 503);
   ensureAllowedOrigin(request, env);
-  const { name, email } = await parseCheckout(request);
-  const purchase = await createPurchase(env, "paypal", name, email);
+  const { name, email, discountPercent } = await parseCheckout(request);
+  const purchase = await createPurchase(env, "paypal", name, email, discountPercent);
   const accessToken = await paypalAccessToken(env);
   const apiUrl = new URL(request.url).origin;
   const response = await fetch(`${env.PAYPAL_API_BASE}/v2/checkout/orders`, {

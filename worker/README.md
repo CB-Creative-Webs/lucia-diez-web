@@ -13,6 +13,7 @@ Cloudflare Worker con D1 para compras, R2 privado para el PDF, Mercado Pago, Pay
 
 - Mercado Pago: ARS 20.000 (`PRODUCT_ARS=20000`).
 - PayPal: USD 25 (`PRODUCT_USD=25`).
+- Promociones reutilizables: `RAIZ30` descuenta 30% y `RAIZ50` descuenta 50%; ambos se validan y calculan en el Worker.
 - Brevo From/Reply-To: `Lucía Diez <luciaadiez@gmail.com>`.
 
 ## Secretos requeridos

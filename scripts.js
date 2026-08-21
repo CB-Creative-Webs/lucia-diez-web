@@ -413,6 +413,7 @@ document.querySelectorAll("[data-checkout-form]").forEach((form) => {
           body: JSON.stringify({
             name: String(data.get("name") || ""),
             email: String(data.get("email") || ""),
+            promoCode: String(data.get("promoCode") || ""),
           }),
         },
       );
