@@ -396,11 +396,19 @@ document.querySelectorAll("[data-contact-form]").forEach((form) => {
 });
 
 document.querySelectorAll("[data-checkout-form]").forEach((form) => {
+  const gatewaySelect = form.querySelector("select[name='gateway']");
+  const submit = form.querySelector("[data-checkout-submit]");
+  const updateCheckoutButton = () => {
+    if (!(submit instanceof HTMLButtonElement) || !(gatewaySelect instanceof HTMLSelectElement)) return;
+    submit.textContent = gatewaySelect.value === "paypal" ? "Comprar con PayPal" : "Comprar con Mercado Pago";
+  };
+  gatewaySelect?.addEventListener("change", updateCheckoutButton);
+  updateCheckoutButton();
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const data = new FormData(form);
     const gateway = data.get("gateway") === "paypal" ? "paypal" : "mercadopago";
-    const submit = form.querySelector("button[type='submit']");
     const status = form.querySelector("[data-checkout-status]");
     if (submit instanceof HTMLButtonElement) submit.disabled = true;
     if (status) status.textContent = "Preparando el pago seguro…";
@@ -427,6 +435,7 @@ document.querySelectorAll("[data-checkout-form]").forEach((form) => {
         status.textContent = error instanceof Error ? error.message : "No pudimos iniciar el pago. Intentá nuevamente.";
       }
       if (submit instanceof HTMLButtonElement) submit.disabled = false;
+      updateCheckoutButton();
     }
   });
 });
