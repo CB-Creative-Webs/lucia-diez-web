@@ -6,7 +6,7 @@
   "compatibility_flags": ["nodejs_compat"],
   "vars": {
     "ENVIRONMENT": "production",
-    "SALE_ENABLED": "false",
+    "SALE_ENABLED": "true",
     "SITE_URL": "https://www.luciadiez.com",
     "API_PUBLIC_URL": "https://lucia-diez-ebook-api.cbcreative10.workers.dev",
     "ALLOWED_ORIGIN": "https://www.luciadiez.com",
