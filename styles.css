@@ -1052,7 +1052,7 @@ h3 {
   position: relative;
   isolation: isolate;
   display: grid;
-  gap: 0;
+  gap: 14px;
   min-height: 430px;
   padding: 28px 10px 20px 42px;
   margin-top: -4px;
@@ -1098,7 +1098,7 @@ h3 {
 }
 
 .credentials article {
-  --card-tilt: -1deg;
+  --card-tilt: 0deg;
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
@@ -1116,7 +1116,7 @@ h3 {
     var(--warm-white);
   box-shadow: 0 22px 54px rgba(49, 73, 93, 0.12);
   transform: translateY(0) rotate(var(--card-tilt));
-  animation: credentialWeave 8.5s ease-in-out infinite;
+  animation: none;
   transition:
     transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1),
     box-shadow 300ms ease,
@@ -1165,17 +1165,16 @@ h3 {
 }
 
 .credentials article:nth-child(2) {
-  --card-tilt: 1.15deg;
+  --card-tilt: 0deg;
   z-index: 2;
-  margin-top: -16px;
-  margin-left: 46px;
+  margin-top: 0;
+  margin-left: 0;
   border-color: rgba(215, 166, 180, 0.36);
   border-left-color: var(--rose);
   background:
     radial-gradient(circle at 10% 92%, rgba(215, 166, 180, 0.2), transparent 7rem),
     linear-gradient(128deg, rgba(255, 253, 249, 0.98), rgba(215, 166, 180, 0.2)),
     var(--warm-white);
-  animation-delay: -2.4s;
 }
 
 .credentials article:nth-child(2)::after {
@@ -1187,17 +1186,16 @@ h3 {
 }
 
 .credentials article:nth-child(3) {
-  --card-tilt: -0.75deg;
+  --card-tilt: 0deg;
   z-index: 3;
-  margin-top: -16px;
-  margin-left: 18px;
+  margin-top: 0;
+  margin-left: 0;
   border-color: rgba(167, 180, 160, 0.38);
   border-left-color: var(--sage);
   background:
     radial-gradient(circle at 10% 92%, rgba(167, 180, 160, 0.22), transparent 7rem),
     linear-gradient(128deg, rgba(255, 253, 249, 0.98), rgba(167, 180, 160, 0.2)),
     var(--warm-white);
-  animation-delay: -4.8s;
 }
 
 .credentials article:nth-child(3)::after {
