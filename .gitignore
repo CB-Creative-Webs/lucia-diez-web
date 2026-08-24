@@ -2,6 +2,7 @@
 .private/
 tmp/
 output/
+.wrangler/
 .env
 .env.*
 !.env.example
