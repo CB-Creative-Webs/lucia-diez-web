@@ -482,6 +482,20 @@ const paypalWebhook = async (request: Request, env: Env) => {
   return json({ ok: true });
 };
 
+const downloadMessagePage = (message: string, status: number) =>
+  new Response(
+    `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Descarga del E-book R.A.Í.Z.</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f7f2ed;color:#31495d;font-family:system-ui,sans-serif}.card{width:min(88vw,34rem);padding:2rem;border:1px solid #d9d2cb;border-radius:1.25rem;background:#fffdf9;box-shadow:0 1.5rem 4rem #31495d1a}h1{margin-top:0;font-family:Georgia,serif}p{line-height:1.6}</style></head><body><main class="card"><h1>E-book R.A.Í.Z.</h1><p>${escapeHtml(message)}</p><p>Si necesitás ayuda, respondé el email de entrega para comunicarte con Lucía.</p></main></body></html>`,
+    {
+      status,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Content-Disposition": "inline",
+        "Cache-Control": "private, no-store",
+        "X-Content-Type-Options": "nosniff",
+      },
+    },
+  );
+
 const download = async (request: Request, env: Env, token: string) => {
   const tokenHash = await sha256(token);
   const purchase = await env.DB.prepare(
@@ -490,19 +504,32 @@ const download = async (request: Request, env: Env, token: string) => {
     .bind(tokenHash)
     .first<Purchase>();
   if (!purchase || !purchase.download_expires_at || new Date(purchase.download_expires_at) <= new Date()) {
-    return new Response("El enlace venció o no es válido.", { status: 410 });
+    return downloadMessagePage("El enlace venció o no es válido.", 410);
   }
   if (purchase.download_count >= Number(env.MAX_DOWNLOADS)) {
-    return new Response("El enlace alcanzó el máximo de descargas.", { status: 410 });
+    return downloadMessagePage("El enlace alcanzó el máximo de descargas.", 410);
+  }
+  if (request.method === "GET") {
+    return new Response(
+      `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Descargar E-book R.A.Í.Z.</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f7f2ed;color:#31495d;font-family:system-ui,sans-serif}.card{width:min(88vw,34rem);padding:2rem;border:1px solid #d9d2cb;border-radius:1.25rem;background:#fffdf9;box-shadow:0 1.5rem 4rem #31495d1a}h1{margin-top:0;font-family:Georgia,serif}p{line-height:1.6}.button{display:inline-flex;margin-top:.5rem;padding:.9rem 1.25rem;border:0;border-radius:999px;background:#31495d;color:white;font:inherit;font-weight:700;cursor:pointer}</style></head><body><main class="card"><h1>Tu E-book R.A.Í.Z. está listo</h1><p>El enlace vence a los 7 días y permite hasta ${env.MAX_DOWNLOADS} descargas. La descarga se contabiliza únicamente cuando presionás el botón.</p><form method="post"><button class="button" type="submit">Descargar PDF</button></form></main></body></html>`,
+      {
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          "Content-Disposition": "inline",
+          "Cache-Control": "private, no-store",
+          "X-Content-Type-Options": "nosniff",
+        },
+      },
+    );
   }
   const object = await env.EBOOKS.get(env.EBOOK_OBJECT_KEY);
-  if (!object?.body) return new Response("Archivo no disponible.", { status: 503 });
+  if (!object?.body) return downloadMessagePage("El archivo no está disponible temporalmente.", 503);
   const update = await env.DB.prepare(
     "UPDATE purchases SET download_count = download_count + 1, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND download_count < ?",
   )
     .bind(purchase.id, Number(env.MAX_DOWNLOADS))
     .run();
-  if (!update.meta.changes) return new Response("El enlace alcanzó el máximo de descargas.", { status: 410 });
+  if (!update.meta.changes) return downloadMessagePage("El enlace alcanzó el máximo de descargas.", 410);
   const headers = new Headers({
     "Content-Type": "application/pdf",
     "Content-Disposition": 'attachment; filename="Ebook_RAIZ_Lucia_Diez.pdf"',
@@ -526,12 +553,13 @@ export default {
       if (request.method === "POST" && url.pathname === "/api/webhooks/mercadopago") return await mercadoPagoWebhook(request, env);
       if (request.method === "POST" && url.pathname === "/api/webhooks/paypal") return await paypalWebhook(request, env);
       if (request.method === "GET" && url.pathname === "/api/paypal/capture") return await paypalCapture(request, env);
-      if (request.method === "GET" && url.pathname.startsWith("/api/download/")) {
+      if ((request.method === "GET" || request.method === "POST") && url.pathname.startsWith("/api/download/")) {
         return await download(request, env, url.pathname.slice("/api/download/".length));
       }
       return errorResponse(env, "Ruta inexistente.", 404);
     } catch (error) {
-      console.error(JSON.stringify({ event: "request_failed", path: url.pathname, message: error instanceof Error ? error.message : "unknown" }));
+      const safePath = url.pathname.startsWith("/api/download/") ? "/api/download/[REDACTED]" : url.pathname;
+      console.error(JSON.stringify({ event: "request_failed", path: safePath, message: error instanceof Error ? error.message : "unknown" }));
       return errorResponse(env, error instanceof Error ? error.message : "Error inesperado.", 500);
     }
   },
