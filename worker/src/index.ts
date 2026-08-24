@@ -259,7 +259,7 @@ const sendDelivery = async (env: Env, purchase: Purchase) => {
       replyTo: { name: env.BREVO_SENDER_NAME, email: env.BREVO_SENDER_EMAIL },
       to: [{ name: purchase.customer_name, email: purchase.customer_email }],
       subject: "Tu E-book R.A.Í.Z. ya está disponible",
-      htmlContent: `<p>Hola ${escapeHtml(purchase.customer_name)},</p><p>Gracias por tu compra. Podés descargar el E-book R.A.Í.Z. desde este enlace privado:</p><p><a href="${apiUrl}/api/download/${token}">Descargar E-book R.A.Í.Z.</a></p><p>El enlace vence en ${expiryLabel} y permite hasta ${env.MAX_DOWNLOADS} descargas.</p><p>Lucía Diez</p>`,
+      htmlContent: `<p>Hola ${escapeHtml(purchase.customer_name)},</p><p>Gracias por tu compra. Podés descargar el E-book R.A.Í.Z. desde este enlace privado:</p><p><a href="${apiUrl}/api/download/${token}">Descargar E-book R.A.Í.Z.</a></p><p>El enlace vence en ${expiryLabel} y permite hasta ${env.MAX_DOWNLOADS} descargas.</p><p>Si conocés a alguien que también compró el ebook y no encuentra este correo, sugerile revisar Spam, Correo no deseado y Promociones.</p><p>Lucía Diez</p>`,
       tags: ["ebook-raiz", "compra-aprobada"],
     }),
   });
