@@ -8,7 +8,7 @@ Sitio profesional para Lucia Diez, psicologa, con identidad visual editorial, pa
 - Dominio previsto/publicado: `https://www.luciadiez.com/`.
 - Repositorio remoto configurado: `https://github.com/CB-Creative-Webs/lucia-diez-web.git`.
 - Rama objetivo: `main`.
-- Version de cache mas reciente en HTML: `design139`.
+- Version de cache mas reciente en HTML: `design140`.
 - SEO tecnico: URLs canonicas sin `.html`, redirecciones permanentes preparadas, pagina 404, metadatos sociales, `robots.txt`, `sitemap.xml` y datos estructurados JSON-LD para la profesional, el programa y el e-book.
 - AEO/GEO: respuestas frecuentes explicitas, entidades consistentes y `llms.txt` con las paginas y afirmaciones verificables principales.
 - Venta del e-book: backend en Cloudflare Worker, base D1, PDF en R2 privado, Mercado Pago, PayPal, Brevo y descargas limitadas a 7 dias y 3 intentos.
@@ -97,6 +97,7 @@ Sitio profesional para Lucia Diez, psicologa, con identidad visual editorial, pa
 13. Se completo una optimizacion SEO, AEO y GEO integral: metadata por URL, datos estructurados, sitemap, robots, contenido citable y limpieza de textos de maqueta.
 14. Se alinearon canonicales, sitemap, enlaces internos y retornos de pago con las URLs publicas sin `.html`; tambien se agregaron redirecciones 301 y una respuesta 404 real. La configuracion SEO se publico el 1 de octubre de 2026.
 15. Se hizo idempotente la confirmacion de pagos: los webhooks repetidos de PayPal o Mercado Pago ya no pueden degradar una compra `delivered` ni invalidar su enlace de descarga. La correccion del Worker se desplego el 1 de septiembre de 2026.
+16. Se corrigio la altura automatica de imagenes con dimensiones HTML para evitar que la foto principal desplazara el texto de portada en escritorio. Se publico como `design140`.
 
 ## Pendientes Antes de Produccion Final
 
@@ -118,7 +119,7 @@ python3 -m http.server 8000
 Abrir:
 
 ```text
-http://localhost:8000/index.html?v=design139
+http://localhost:8000/index.html?v=design140
 ```
 
 Si se hacen cambios en CSS o JS, subir el numero de version en los HTML para evitar cache del navegador.

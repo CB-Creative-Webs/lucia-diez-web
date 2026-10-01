@@ -47,6 +47,7 @@ body.nav-open {
 img {
   display: block;
   max-width: 100%;
+  height: auto;
 }
 
 a {
@@ -543,6 +544,7 @@ body.header-idle:not(.nav-open) .site-header:not(:hover):not(:focus-within) {
 
 .hero-copy {
   position: relative;
+  min-width: 0;
 }
 
 .hero-copy::before,
