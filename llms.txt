@@ -5,8 +5,8 @@ Sitio oficial de Lucía Diez, Licenciada en Psicología, especialista en psicotr
 ## Páginas principales
 
 - [Inicio y perfil profesional](https://www.luciadiez.com/): enfoque, formación, áreas de acompañamiento, servicios, preguntas frecuentes y contacto.
-- [Programa R.A.Í.Z.](https://www.luciadiez.com/pages/programa-raiz.html): recorrido clínico de 12 semanas con 6 sesiones individuales, materiales, tareas y seguimiento profesional.
-- [E-book R.A.Í.Z.](https://www.luciadiez.com/pages/ebook-primer-recurso.html): e-book de 68 páginas sobre psicotrauma, neurociencia, regulación emocional, vínculos y recursos de cuidado.
+- [Programa R.A.Í.Z.](https://www.luciadiez.com/pages/programa-raiz): recorrido clínico de 12 semanas con 6 sesiones individuales, materiales, tareas y seguimiento profesional.
+- [E-book R.A.Í.Z.](https://www.luciadiez.com/pages/ebook-primer-recurso): e-book de 68 páginas sobre psicotrauma, neurociencia, regulación emocional, vínculos y recursos de cuidado.
 
 ## Entidad y contacto
 

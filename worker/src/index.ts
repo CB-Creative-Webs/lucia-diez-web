@@ -145,9 +145,9 @@ const mercadoPagoCheckout = async (request: Request, env: Env) => {
       external_reference: purchase.id,
       notification_url: `${apiUrl}/api/webhooks/mercadopago`,
       back_urls: {
-        success: `${env.SITE_URL}/pages/pago-aprobado.html`,
-        pending: `${env.SITE_URL}/pages/pago-pendiente.html`,
-        failure: `${env.SITE_URL}/pages/pago-rechazado.html`,
+        success: `${env.SITE_URL}/pages/pago-aprobado`,
+        pending: `${env.SITE_URL}/pages/pago-pendiente`,
+        failure: `${env.SITE_URL}/pages/pago-rechazado`,
       },
       auto_return: "approved",
       statement_descriptor: "LUCIA DIEZ",
@@ -211,7 +211,7 @@ const paypalCheckout = async (request: Request, env: Env) => {
             brand_name: "Lucía Diez",
             user_action: "PAY_NOW",
             return_url: `${apiUrl}/api/paypal/capture`,
-            cancel_url: `${env.SITE_URL}/pages/pago-cancelado.html`,
+            cancel_url: `${env.SITE_URL}/pages/pago-cancelado`,
           },
         },
       },
@@ -343,12 +343,19 @@ const mercadoPagoWebhook = async (request: Request, env: Env) => {
   if (payment.currency_id !== purchase.currency || payment.transaction_amount !== expectedAmount) {
     return errorResponse(env, "Importe no válido.", 400);
   }
+  const nextStatus = payment.status === "approved" ? "approved" : "pending";
   await env.DB.prepare(
-    "UPDATE purchases SET gateway_payment_id = ?, status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?",
+    `UPDATE purchases
+     SET gateway_payment_id = ?,
+         status = CASE WHEN status = 'delivered' THEN status ELSE ? END,
+         updated_at = CURRENT_TIMESTAMP
+     WHERE id = ?`,
   )
-    .bind(String(payment.id), payment.status === "approved" ? "approved" : "pending", purchase.id)
+    .bind(String(payment.id), nextStatus, purchase.id)
     .run();
-  if (payment.status === "approved") await sendDelivery(env, { ...purchase, status: "approved" });
+  if (payment.status === "approved" && purchase.status !== "delivered") {
+    await sendDelivery(env, { ...purchase, status: "approved" });
+  }
   return json({ ok: true });
 };
 
@@ -357,7 +364,7 @@ const paypalCapture = async (request: Request, env: Env) => {
   const purchase = await env.DB.prepare("SELECT * FROM purchases WHERE gateway_order_id = ? AND gateway = 'paypal'")
     .bind(orderId)
     .first<Purchase>();
-  if (!purchase) return Response.redirect(`${env.SITE_URL}/pages/pago-rechazado.html`, 303);
+  if (!purchase) return Response.redirect(`${env.SITE_URL}/pages/pago-rechazado`, 303);
   const accessToken = await paypalAccessToken(env);
   const response = await fetch(`${env.PAYPAL_API_BASE}/v2/checkout/orders/${encodeURIComponent(orderId)}/capture`, {
     method: "POST",
@@ -380,14 +387,18 @@ const paypalCapture = async (request: Request, env: Env) => {
     payment?.status === "COMPLETED" &&
     payment.amount?.currency_code === purchase.currency &&
     Number(payment.amount.value) === purchase.amount_cents / 100;
-  if (!valid) return Response.redirect(`${env.SITE_URL}/pages/pago-pendiente.html`, 303);
+  if (!valid) return Response.redirect(`${env.SITE_URL}/pages/pago-pendiente`, 303);
   await env.DB.prepare(
-    "UPDATE purchases SET gateway_payment_id = ?, status = 'approved', updated_at = CURRENT_TIMESTAMP WHERE id = ?",
+    `UPDATE purchases
+     SET gateway_payment_id = ?,
+         status = CASE WHEN status = 'delivered' THEN status ELSE 'approved' END,
+         updated_at = CURRENT_TIMESTAMP
+     WHERE id = ?`,
   )
     .bind(payment.id, purchase.id)
     .run();
-  await sendDelivery(env, { ...purchase, status: "approved" });
-  return Response.redirect(`${env.SITE_URL}/pages/pago-aprobado.html`, 303);
+  if (purchase.status !== "delivered") await sendDelivery(env, { ...purchase, status: "approved" });
+  return Response.redirect(`${env.SITE_URL}/pages/pago-aprobado`, 303);
 };
 
 const paypalWebhook = async (request: Request, env: Env) => {
@@ -447,17 +458,25 @@ const paypalWebhook = async (request: Request, env: Env) => {
       (!event.resource.custom_id || event.resource.custom_id === purchase.id);
     if (!amountValid) return errorResponse(env, "Importe no válido.", 400);
     await env.DB.prepare(
-      "UPDATE purchases SET gateway_payment_id = ?, status = 'approved', updated_at = CURRENT_TIMESTAMP WHERE id = ?",
+      `UPDATE purchases
+       SET gateway_payment_id = ?,
+           status = CASE WHEN status = 'delivered' THEN status ELSE 'approved' END,
+           updated_at = CURRENT_TIMESTAMP
+       WHERE id = ?`,
     )
       .bind(event.resource?.id, purchase.id)
       .run();
-    await sendDelivery(env, { ...purchase, status: "approved" });
+    if (purchase.status !== "delivered") await sendDelivery(env, { ...purchase, status: "approved" });
   } else if (eventType === "PAYMENT.CAPTURE.PENDING" && purchase) {
-    await env.DB.prepare("UPDATE purchases SET status = 'pending', updated_at = CURRENT_TIMESTAMP WHERE id = ?")
+    await env.DB.prepare(
+      "UPDATE purchases SET status = 'pending', updated_at = CURRENT_TIMESTAMP WHERE id = ? AND status != 'delivered'",
+    )
       .bind(purchase.id)
       .run();
   } else if (eventType === "PAYMENT.CAPTURE.DECLINED" && purchase) {
-    await env.DB.prepare("UPDATE purchases SET status = 'rejected', updated_at = CURRENT_TIMESTAMP WHERE id = ?")
+    await env.DB.prepare(
+      "UPDATE purchases SET status = 'rejected', updated_at = CURRENT_TIMESTAMP WHERE id = ? AND status != 'delivered'",
+    )
       .bind(purchase.id)
       .run();
   } else if ((eventType === "PAYMENT.CAPTURE.REFUNDED" || eventType === "PAYMENT.CAPTURE.REVERSED") && purchase) {
@@ -469,7 +488,9 @@ const paypalWebhook = async (request: Request, env: Env) => {
       .bind(purchase.id)
       .run();
   } else if (eventType === "CHECKOUT.PAYMENT-APPROVAL.REVERSED" && purchase) {
-    await env.DB.prepare("UPDATE purchases SET status = 'cancelled', updated_at = CURRENT_TIMESTAMP WHERE id = ?")
+    await env.DB.prepare(
+      "UPDATE purchases SET status = 'cancelled', updated_at = CURRENT_TIMESTAMP WHERE id = ? AND status != 'delivered'",
+    )
       .bind(purchase.id)
       .run();
   }

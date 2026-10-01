@@ -8,10 +8,10 @@ Sitio profesional para Lucia Diez, psicologa, con identidad visual editorial, pa
 - Dominio previsto/publicado: `https://www.luciadiez.com/`.
 - Repositorio remoto configurado: `https://github.com/CB-Creative-Webs/lucia-diez-web.git`.
 - Rama objetivo: `main`.
-- Version de cache actual en HTML: `design135`.
-- SEO tecnico: canonicales, metadatos sociales, `robots.txt`, `sitemap.xml` y datos estructurados JSON-LD para la profesional, el programa y el e-book.
+- Version de cache mas reciente en HTML: `design139`.
+- SEO tecnico: URLs canonicas sin `.html`, redirecciones permanentes preparadas, pagina 404, metadatos sociales, `robots.txt`, `sitemap.xml` y datos estructurados JSON-LD para la profesional, el programa y el e-book.
 - AEO/GEO: respuestas frecuentes explicitas, entidades consistentes y `llms.txt` con las paginas y afirmaciones verificables principales.
-- Venta del e-book: backend de staging en Cloudflare Worker, base D1 y PDF en R2 privado; producción bloqueada hasta cargar secretos y completar pruebas.
+- Venta del e-book: backend en Cloudflare Worker, base D1, PDF en R2 privado, Mercado Pago, PayPal, Brevo y descargas limitadas a 7 dias y 3 intentos.
 - Idiomas: Espanol e ingles mediante `scripts.js`.
 - La navegacion principal incluye: Inicio, Sobre mi, Como puedo acompanarte, Reserva tu sesion, E-books, Preguntas y Contacto.
 - La firma de autoria al pie es minimal: `Design by CB` con logo y link externo.
@@ -95,14 +95,13 @@ Sitio profesional para Lucia Diez, psicologa, con identidad visual editorial, pa
 11. Se cambio el precio de sesion individual de `$70.000 ARS` a `$60.000 ARS`.
 12. Se actualizaron los valores vigentes: sesion individual exterior a `USD 65` y Programa R.A.I.Z. a `$240.000 ARS` / `USD 260`.
 13. Se completo una optimizacion SEO, AEO y GEO integral: metadata por URL, datos estructurados, sitemap, robots, contenido citable y limpieza de textos de maqueta.
+14. Se alinearon canonicales, sitemap, enlaces internos y retornos de pago con las URLs publicas sin `.html`; tambien se agregaron redirecciones 301 y una respuesta 404 real. La configuracion SEO se publico el 1 de octubre de 2026.
+15. Se hizo idempotente la confirmacion de pagos: los webhooks repetidos de PayPal o Mercado Pago ya no pueden degradar una compra `delivered` ni invalidar su enlace de descarga. La correccion del Worker se desplego el 1 de septiembre de 2026.
 
 ## Pendientes Antes de Produccion Final
 
 - Confirmar URL exacta de Cecilia Barra Creative para el credito.
-- Confirmar si el precio del e-book y programa siguen vigentes.
-- Confirmar medios de pago reales y links finales de Mercado Pago / PayPal.
 - Reemplazar textos legales en borrador por version revisada legalmente.
-- Conectar backend de compra, webhooks, Supabase Storage y Resend.
 - Validar que `og-lucia-diez.jpg` sea la imagen final deseada para WhatsApp.
 - Revisar mobile real en 360, 375, 390 y 430 px.
 - Revisar accesibilidad basica: foco, contraste, labels y navegacion por teclado.
@@ -119,7 +118,7 @@ python3 -m http.server 8000
 Abrir:
 
 ```text
-http://localhost:8000/index.html?v=design135
+http://localhost:8000/index.html?v=design139
 ```
 
 Si se hacen cambios en CSS o JS, subir el numero de version en los HTML para evitar cache del navegador.
